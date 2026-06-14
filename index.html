@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador Interativo de Atribuição de Incrementabilidade</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    background: #F2F1ED;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+  .panel {
+    background: #131A2E;
+    border-radius: 16px;
+    padding: 28px 32px;
+    max-width: 1100px;
+    width: 100%;
+    color: #FFFFFF;
+  }
+  .header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .icon-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #1C2438;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  h1 {
+    font-size: 26px;
+    margin: 8px 0 0;
+    font-weight: 700;
+  }
+  .subtitle {
+    color: #9BA3C2;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 6px 0 24px 58px;
+    max-width: 800px;
+  }
+  .content {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 800px) {
+    .content { grid-template-columns: 1fr; }
+    .subtitle { margin-left: 0; }
+  }
+  .card {
+    background: #0E1422;
+    border: 1px solid #2A3149;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .control + .control {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid #2A3149;
+  }
+  .control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+  }
+  .control-header label {
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .control-header span {
+    font-size: 15px;
+    font-weight: 700;
+    color: #8B7CF6;
+  }
+  input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: #2A3149;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    accent-color: #8B7CF6;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #8B7CF6;
+    cursor: pointer;
+    border: none;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #8B7CF6;
+    cursor: pointer;
+    border: none;
+  }
+  .control p {
+    font-size: 12.5px;
+    color: #9BA3C2;
+    margin: 10px 0 0;
+    line-height: 1.5;
+  }
+  .formula-box {
+    margin-top: 28px;
+    background: #1C2438;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12.5px;
+    color: #9BA3C2;
+    font-family: "Courier New", monospace;
+  }
+  .right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .stat-card {
+    background: #1C2438;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .stat-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #9BA3C2;
+    letter-spacing: 1px;
+    margin: 0 0 12px;
+  }
+  .stat-value {
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    line-height: 1;
+  }
+  .stat-value.roas { color: #F4A340; }
+  .stat-note {
+    font-size: 12.5px;
+    color: #9BA3C2;
+    margin: 0;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+  <div class="panel">
+    <div class="header">
+      <div class="icon-circle">🔬</div>
+      <h1>Simulador Interativo de Atribuição de Incrementabilidade</h1>
+    </div>
+    <p class="subtitle">
+      Como a ausência de dados de BI nos obriga a criar cenários hipotéticos. Ajuste as variáveis abaixo para simular o verdadeiro impacto financeiro que pode ser associado à mídia paga.
+    </p>
+
+    <div class="content">
+      <div class="card">
+        <div class="control">
+          <div class="control-header">
+            <label for="eficiencia">Eficiência Real das Compras Diretas</label>
+            <span id="eficiencia-out">100%</span>
+          </div>
+          <input type="range" id="eficiencia" min="0" max="100" value="100" step="1">
+          <p>Porcentagem das vendas diretas realmente influenciadas por canais digitais. Peso de 50% no cálculo final.</p>
+        </div>
+
+        <div class="control">
+          <div class="control-header">
+            <label for="desconto">Fator de Desconto (Social / Vacinação)</label>
+            <span id="desconto-out">80%</span>
+          </div>
+          <input type="range" id="desconto" min="0" max="100" value="80" step="1">
+          <p>Desconto da receita global motivado apenas pela euforia da reabertura pós-vacinatória. Peso de 50% no cálculo final.</p>
+        </div>
+
+        <div class="formula-box">
+          Fórmula: fator = 0,5 × eficiência + 0,5 × (1 − desconto)
+        </div>
+      </div>
+
+      <div class="right-col">
+        <div class="stat-card">
+          <p class="stat-label">RECEITA ATRIBUÍVEL AJUSTADA</p>
+          <p class="stat-value" id="receita-out">R$ 0,93M</p>
+          <p class="stat-note">Diferente do valor de R$ 4,66M reportado de forma agregada.</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">ROAS AJUSTADO REAL</p>
+          <p class="stat-value roas" id="roas-out">5,50x</p>
+          <p class="stat-note">Corrigindo a estimativa de 27,49x após descontar ruídos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  var RECEITA_AGREGADA = 4.66; // R$ M
+  var ROAS_BRUTO = 27.49;
+  var PESO_EFICIENCIA = 0.5;
+  var PESO_DESCONTO = 0.5;
+
+  var eficiencia = document.getElementById('eficiencia');
+  var desconto = document.getElementById('desconto');
+  var eficienciaOut = document.getElementById('eficiencia-out');
+  var descontoOut = document.getElementById('desconto-out');
+  var receitaOut = document.getElementById('receita-out');
+  var roasOut = document.getElementById('roas-out');
+
+  function update() {
+    var ef = parseFloat(eficiencia.value) / 100;
+    var de = parseFloat(desconto.value) / 100;
+
+    eficienciaOut.textContent = Math.round(ef * 100) + '%';
+    descontoOut.textContent = Math.round(de * 100) + '%';
+
+    var fatorTotal = (PESO_EFICIENCIA * ef) + (PESO_DESCONTO * (1 - de));
+    var receita = RECEITA_AGREGADA * fatorTotal;
+    var roas = ROAS_BRUTO * fatorTotal;
+
+    receitaOut.textContent = 'R$ ' + receita.toFixed(2).replace('.', ',') + 'M';
+    roasOut.textContent = roas.toFixed(2).replace('.', ',') + 'x';
+  }
+
+  eficiencia.addEventListener('input', update);
+  desconto.addEventListener('input', update);
+  update();
+</script>
+</body>
+</html>
